@@ -1,11 +1,26 @@
 import logging
+import os
 from discord.ext import commands
-from martin_bot.api import create_app
-from martin_bot.util.args_util import parse_args
-from martin_bot.util.logging_util import setup_logger
-from martin_bot.core.cogs.general import GeneralCog
-
+from api import create_app
+from util.args_util import parse_args
+from util.logging_util import setup_logger
+from util import clean_path
 logger = logging.getLogger(__name__)
+
+def load_cogs(bot):
+	logger.info("Attempting to load Cogs")
+	path = clean_path('martin_bot/core/cogs')
+	for file in os.listdir(path):
+		if file.endswith('.py'):
+			cog_name = f"core.cogs.{file[:-3]}"
+			try:
+				bot.load_extension(cog_name)
+				logger.info(f'Loaded Extension {cog_name}')
+			except Exception as e:
+				exc = f'{type(e).__name__}: {e}'
+				logger.info(f'Failed to load extension {file}\n{exc}')
+		return bot
+
 
 def main() -> None:
 	args = parse_args()
@@ -26,9 +41,9 @@ def main() -> None:
 			logger.info("Successful in launching background Flask API.")
 		except Exception as e:
 			logger.error(f"Failed launch of background Flask API with error: {str(e)}")
-	bot = commands.Bot(command_prefix='$')
-	bot.add_cog(GeneralCog(bot))
-	logger.info("Attempting to run Zorak")
+	bot = commands.Bot(command_prefix=["z.", "Z."])
+	bot = load_cogs(bot)
+	logger.info("Attempting to run Martin")
 	bot.run(args.discord_token)
 
 

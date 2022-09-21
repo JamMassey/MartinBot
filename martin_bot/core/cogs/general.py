@@ -6,8 +6,8 @@ class GeneralCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(name='embeds')
-    async def example_embed(self, ctx):
+    @commands.command()
+    async def embed(self, ctx):
 
         embed = discord.Embed(title='Example Embed',
                               description='Showcasing the use of Embeds...\nSee the visualizer for more info.',
@@ -21,11 +21,15 @@ class GeneralCog(commands.Cog):
         embed.add_field(name='Command Invoker', value=ctx.author.mention)
         embed.set_footer(text='Made in Python with discord.py@rewrite', icon_url='http://i.imgur.com/5BFecvA.png')
         await ctx.send(content='**A simple Embed for discord.py@rewrite in cogs.**', embed=embed)
+	
+	# def ping(ctx, bot): 
+	# await discord.Embed(
+	# 	title="Pong",
+	# 	description=f"Martin's current ping is **{round(bot.latency * 1000)}ms**",
+	# 	timestamp=ctx.message.created_at,
+	# 	color=discord.Color.green())
+
+def setup(bot):
+    bot.add_cog(GeneralCog(bot))
 
 
-def ping(ctx, bot): 
-	return(discord.Embed(
-		title="Pong.",
-		description=f"Zorak's current ping is **{round(bot.latency * 1000)}ms**",
-		timestamp=ctx.message.created_at,
-		color=discord.Color.green()))
