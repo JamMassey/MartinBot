@@ -16,7 +16,7 @@ class StockFeatures:
         self.indicators = {}
         
 
-    def add_sma(self,window = 30):
+    def add_sma(self,window = 30): #all add functions should first make a dict check
        self.indicators[f'SMA-{window}'] = {
             "indicator_type" : "single",
             "chart_type": ""
@@ -60,14 +60,10 @@ class StockFeatures:
         "yaxis2": {"domain": [0.5, 0.95]}, 
         "plot_bgcolor": "rgb(250, 250, 250)"
         }
-        fig = Figure(data=trace_array, layout=layout)
+        fig = go.Figure(data=trace_array, layout=layout)
         fig.update(layout_xaxis_rangeslider_visible=False)
 
-        for key, value in self.indicators.items():
-             fig.add_trace(go.Scatter(x = self.single_channel_indicators.index,
-                          y = self.single_channel_indicators[col],
-                          name = "candlestick"),
-               row = 1, col = 1)
+
         # fig.update_layout(plot_bgcolor = "rgb(250, 250, 250)")
 
         return fig        

@@ -17,7 +17,7 @@ class GoogleTrendsCog(commands.Cog):
 		embed = {	
 			"title": "Top 10 Worldwide Daily Search Trends",
 			"color": 4903252,
-			#"timestamp": str(datetime.now()),
+			#"timestamp": str(datetime.now()), 
 			"footer": {
 			"icon_url": "https://pjsoft.in/img/google-trends.png",
 			"text": "Google Trends"
@@ -28,7 +28,6 @@ class GoogleTrendsCog(commands.Cog):
 			"fields":[]
 		}
 		results = self.pytrends.trending_searches()[0].to_list() #Update to do countries
-		#[1,6,2,7,3,8,4,9,5,10]
 		for i, rank in enumerate(range(1, 11)):
 			embed["fields"].append({
 			"name": f"{str(rank)}. {results[i]}",
