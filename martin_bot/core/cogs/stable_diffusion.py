@@ -12,12 +12,11 @@ class DiffusionCog(commands.Cog):
 
     @commands.command(aliases=["drawme"])
     async def stable_diffusion(self, ctx, input, seed = None):
-        logger.info(input)
-        logger.info(seed)
         sanetized = input.replace(" ", "-")
         gen_url = f"https://api.computerender.com/generate/{sanetized}"
         if seed:
             gen_url = gen_url+f"?seed={seed}"
+        logger.info(gen_url)
         embed =  {
                 "title": "Your Image",
                 "color": 10848322,
