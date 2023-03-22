@@ -24,3 +24,4 @@ def clean_path(path: Path | str, resolve: bool = True) -> Path:
         path = Path(path)
     if resolve:
         path = path.resolve()
+    return path
